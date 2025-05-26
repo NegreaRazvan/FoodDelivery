@@ -1,10 +1,6 @@
 
-
 <ul class="flex justify-center items-center flex-wrap list-none gap-4 mt-4">
   <li *ngFor="let food of foods">
-    <a class="cursor-pointer flex flex-col overflow-hidden accent-red-500 h-[20rem] w-[20rem]
-    hover:h-[22rem] hover:w-[22rem] rounded-3xl shadow hover:opacity-80 transition-all duration-500 ease-in-out">
-      <img [src] ="food" alt="food" class="">
-    </a>
+    <app-food-card [food] = "food"></app-food-card>
   </li>
 </ul>
