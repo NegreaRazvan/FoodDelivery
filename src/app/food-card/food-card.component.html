@@ -1,8 +1,14 @@
-<a class="relative flex flex-col overflow-hidden accent-red-500 h-[20rem] w-[20rem] bg-[#242424]
-    hover:h-[22rem] hover:w-[22rem] rounded-3xl shadow hover:opacity-80 transition-all duration-500 ease-in-out">
+
+<a class="relative flex flex-col overflow-hidden accent-red-500 h-[21rem] w-[20rem] bg-[#242424]
+    hover:h-[23rem] hover:w-[22rem] rounded-3xl shadow hover:opacity-80 transition-all duration-500 ease-in-out">
   <img [src] ="food.imageUrl" alt="food" class="">
   <button (click)="food.favorite = !food.favorite" class="cursor-pointer text-gray-300 absolute top-2 right-2 transition-transform duration-200 hover:scale-125">{{ food.favorite ? '❤️' : '🤍'}} </button>
-  <div>
-    <p class="text-gray-300 p-2 ">{{food.name}}</p>
+  <div class="text-gray-300 p-2 ">
+    <p >{{food.name}}</p>
+    <div class="flex flex-row justify-between">
+      <p class="rounded-2xl bg-gray-200 inline-block text-gray-500 p-1">{{food.origins}}</p>
+      <p>⏰{{food.cookTime}}</p>
+    </div>
+    <p>{{food.price | currency}}</p>
   </div>
 </a>
