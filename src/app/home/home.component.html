@@ -1,5 +1,6 @@
 <div class="flex flex-col justify-center items-center mt-8">
   <app-search></app-search>
+  <app-tags></app-tags>
   <ul class="flex justify-center items-center flex-wrap list-none gap-4 mt-4">
     <li *ngFor="let food of foods">
       <app-food-card [food] = "food"></app-food-card>

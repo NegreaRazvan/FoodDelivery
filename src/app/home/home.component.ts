@@ -5,6 +5,7 @@ import {Food} from '../shared/Model/Food';
 import {FoodCardComponent} from '../food-card/food-card.component';
 import {ActivatedRoute} from '@angular/router';
 import {SearchComponent} from '../search/search.component';
+import {TagsComponent} from '../tags/tags.component';
 
 
 @Component({
@@ -12,7 +13,8 @@ import {SearchComponent} from '../search/search.component';
   imports: [
     NgForOf,
     FoodCardComponent,
-    SearchComponent
+    SearchComponent,
+    TagsComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -26,12 +28,10 @@ export class HomeComponent {
   ngOnInit() {
     this.foods = this.foodService.getAll();
     this.route.params.subscribe(params => {
-      console.log(params);
-      if(params['searchTerm']) {
-        this.foods = this.foodService.getAll().filter(food => {
-          return food.name.toLowerCase().includes(params['searchTerm'].toLowerCase())
-        });
-      }
+      if(params['searchTerm'])
+        this.foods = this.foodService.getAllFoodsBySearch(params['searchTerm']);
+      else if(params['tag'])
+        this.foods = this.foodService.getAllFoodsByTag(params['tag']);
       else this.foods = this.foodService.getAll();
     })
   }
