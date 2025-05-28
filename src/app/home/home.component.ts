@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {FoodService} from '../services/food/food.service';
 import {Food} from '../shared/Model/Food';
 import {FoodCardComponent} from '../food-card/food-card.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {SearchComponent} from '../search/search.component';
 import {TagsComponent} from '../tags/tags.component';
 
@@ -14,7 +14,9 @@ import {TagsComponent} from '../tags/tags.component';
     NgForOf,
     FoodCardComponent,
     SearchComponent,
-    TagsComponent
+    TagsComponent,
+    NgIf,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
