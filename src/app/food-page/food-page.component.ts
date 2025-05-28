@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {Food} from '../shared/Model/Food';
 import {FoodService} from '../services/food/food.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CurrencyPipe} from '@angular/common';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {CurrencyPipe, NgIf} from '@angular/common';
 import {TagsComponent} from '../tags/tags.component';
 import {CartService} from '../services/cart/cart.service';
 
@@ -10,7 +10,9 @@ import {CartService} from '../services/cart/cart.service';
   selector: 'app-food-page',
   imports: [
     CurrencyPipe,
-    TagsComponent
+    TagsComponent,
+    NgIf,
+    RouterLink
   ],
   templateUrl: './food-page.component.html',
   styleUrl: './food-page.component.css'
