@@ -1,0 +1,14 @@
+
+<a routerLink="/food/{{food.id}}" class="relative flex flex-col overflow-hidden accent-red-500 h-[21rem] w-[20rem] bg-[#2A2A2A]
+    hover:h-[23rem] hover:w-[22rem] rounded-3xl shadow hover:opacity-80 transition-all duration-500 ease-in-out">
+  <img [src] ="food.imageUrl" [alt]="food.name" class="">
+  <button class=" cursor-pointer text-gray-300 absolute top-2 right-2 transition-transform duration-200">{{ food.favorite ? '❤️' : '🤍'}} </button>
+  <div class="text-gray-300 p-2 ">
+    <p >{{food.name}}</p>
+    <div class="flex flex-row justify-between">
+      <p class="rounded-2xl bg-gray-200 inline-block text-gray-500 p-1">{{food.origins}}</p>
+      <p>⏰{{food.cookTime}}</p>
+    </div>
+    <p>{{food.price | currency}}</p>
+  </div>
+</a>

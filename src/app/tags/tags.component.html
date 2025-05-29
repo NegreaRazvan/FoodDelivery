@@ -1,0 +1,29 @@
+<div *ngIf="this.tags?.length" class="flex flex-wrap gap-2 p-4 justify-center">
+  <a *ngFor="let tag of tags"
+     routerLink="/tag/{{tag.name}}"
+     class="
+       bg-[#0589c2] hover:bg-blue-700 text-white
+       px-4 py-2 rounded-full
+       text-sm font-medium
+       shadow-md hover:shadow-lg
+       transition-all duration-300 ease-in-out
+       transform hover:scale-105
+       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75
+     ">
+    {{tag.name}}({{tag.count}})
+  </a>
+</div>
+<div *ngIf="!this.tags?.length" class="flex gap-2 ">
+  <a *ngFor="let tag of foodPageTags"
+     routerLink="/tag/{{tag}}"
+     class="
+       bg-[#0589c2] hover:bg-blue-700 text-white
+       px-4 py-2 rounded-full
+       text-sm font-medium
+       shadow-md hover:shadow-lg
+       transition-all duration-300 ease-in-out
+       transform hover:scale-105
+     ">
+    {{tag}}
+  </a>
+</div>

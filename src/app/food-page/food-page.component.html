@@ -1,0 +1,57 @@
+<ng-container *ngIf="food; else foodNotFound">
+  <div class="min-h-screen bg-[#1A1A1A] text-gray-200 flex items-center justify-center py-8">
+    <div class="relative flex flex-col md:flex-row overflow-hidden bg-[#242424] rounded-xl shadow-2xl max-w-6xl w-full">
+
+      <div class="flex-shrink-0 w-full md:w-2/5 lg:w-1/2 relative min-h-[350px] md:min-h-[450px]">
+        <img [src]="food.imageUrl" [alt]="food.name" class="w-full h-full object-cover rounded-t-xl md:rounded-l-xl md:rounded-tr-none" loading="lazy">
+      </div>
+
+      <div class="flex-grow p-6 md:p-8 space-y-4 relative">
+        <div class="flex justify-between">
+          <h1 class="text-4xl font-extrabold text-white mb-2 leading-tight">
+            {{food.name}}
+          </h1>
+          <button (click)="food.favorite = !food.favorite"
+                  class="text-3xl transition-transform duration-200 hover:scale-125 focus:outline-none z-10 text-gray-300 hover:text-red-500">
+            {{ food.favorite ? '❤️' : '🤍'}}
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <p class="text-gray-300">Origins:
+            <span class="ml-2 inline-flex items-center bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm font-medium">
+              {{food.origins}}
+            </span>
+          </p>
+          <app-tags [foodPageTags]="food.tags"></app-tags>
+        </div>
+
+        <p class="text-lg text-gray-400">
+          Time to cook: about <strong class="font-semibold text-gray-300">{{food.cookTime}}</strong> minutes
+        </p>
+
+        <p class="text-5xl font-extrabold mt-4">
+          Price: <span class="text-green-400">{{food.price | currency}}</span>
+        </p>
+
+        <div class="pt-6">
+          <button (click)="addToCart(food)" class="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-lg text-xl uppercase tracking-wider transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #foodNotFound>
+  <div class="min-h-screen bg-[#1A1A1A] text-gray-200 flex items-center justify-center py-8">
+    <div class="text-center p-12 bg-[#2A2A2A] rounded-xl shadow-lg max-w-md">
+      <p class="text-3xl text-gray-400 mb-6">Oops! Food Not Found</p>
+      <p class="text-lg text-gray-400 mb-4">The food item you are looking for does not exist or has been removed.</p>
+      <a routerLink="/" class="bg-[#0589c2] hover:bg-[#046e9b] text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200">
+        Go back to Home
+      </a>
+    </div>
+  </div>
+</ng-template>
