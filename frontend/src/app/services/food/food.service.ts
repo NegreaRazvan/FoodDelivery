@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import {Food} from '../../shared/Model/Food';
 import {Tag} from '../../shared/Model/Tag';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FoodService {
+  private readonly API_URL = 'http://localhost/OnlineRestaurant';
+
   constructor() {}
 
   getAllTags(): Tag[]{
