@@ -55,7 +55,7 @@ Here are some screenshots showcasing the application's interface:
 
 ### **Main Food Catalog**
 
-![]![alt text](screenshots/image.png)
+![alt text](screenshots/image.png)
 
 ###
 
@@ -69,11 +69,11 @@ Here are some screenshots showcasing the application's interface:
 
 ### **Food Detail View**
 
-![]![alt text](screenshots/image-1.png)
+![alt text](screenshots/image-1.png)
 
 ### **Shopping Cart**
 
-![]![alt text](screenshots/image-2.png)
+![alt text](screenshots/image-2.png)
 
 ###
 
@@ -85,7 +85,7 @@ Here are some screenshots showcasing the application's interface:
 
 ### **Login Page**
 
-![]![alt text](screenshots/image-3.png)
+![alt text](screenshots/image-3.png)
 
 ###
 
