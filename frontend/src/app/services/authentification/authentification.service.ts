@@ -64,7 +64,7 @@ export class AuthentificationService {
 
 
   private clearSession() {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessTokenExpiresIn');

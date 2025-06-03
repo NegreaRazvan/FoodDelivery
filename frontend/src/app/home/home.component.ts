@@ -7,6 +7,7 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {SearchComponent} from '../search/search.component';
 import {TagsComponent} from '../tags/tags.component';
 import {Subscription} from 'rxjs';
+import {AuthentificationService} from '../services/authentification/authentification.service';
 
 
 @Component({
@@ -27,7 +28,12 @@ export class HomeComponent {
   foods:Food[] = [];
   private foodServiceSubscription: Subscription | undefined;
 
-  constructor(private foodService:FoodService, private route:ActivatedRoute) {
+  constructor(private foodService:FoodService, private route:ActivatedRoute, private aut: AuthentificationService) {
+    console.log(aut.currentUserValue);
+    console.log(localStorage.getItem('accessToken'));
+    console.log(localStorage.getItem('currentUser'));
+    console.log(localStorage.getItem('refreshToken'));
+    console.log(localStorage.getItem('accessTokenExpiresIn'));
   }
 
   ngOnInit() {
