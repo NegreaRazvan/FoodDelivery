@@ -1,5 +1,14 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+define('JWT_SECRET_KEY', $_ENV['JWT_SECRET_KEY']);
+define('ACCESS_TOKEN_EXPIRATION_SECONDS', (int) $_ENV['ACCESS_TOKEN_EXPIRATION_SECONDS']);
+define('REFRESH_TOKEN_EXPIRATION_SECONDS', (int) $_ENV['REFRESH_TOKEN_EXPIRATION_SECONDS']);
+
 $host = 'localhost';
 $db = 'online_restaurant_db';
 $user = 'root';

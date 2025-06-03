@@ -6,6 +6,7 @@ import {FoodCardComponent} from '../food-card/food-card.component';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {SearchComponent} from '../search/search.component';
 import {TagsComponent} from '../tags/tags.component';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -24,17 +25,21 @@ import {TagsComponent} from '../tags/tags.component';
 export class HomeComponent {
 
   foods:Food[] = [];
+  private foodServiceSubscription: Subscription | undefined;
+
   constructor(private foodService:FoodService, private route:ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.foods = this.foodService.getAll();
     this.route.params.subscribe(params => {
-      if(params['searchTerm'])
-        this.foods = this.foodService.getAllFoodsBySearch(params['searchTerm']);
-      else if(params['tag'])
-        this.foods = this.foodService.getAllFoodsByTag(params['tag']);
-      else this.foods = this.foodService.getAll();
+      if(params['searchTerm']) this.foodServiceSubscription = this.foodService.getAllFoodsBySearch(params['searchTerm']).subscribe(f => this.foods = f);
+      else if(params['tag']) this.foodServiceSubscription=this.foodService.getAllFoodsByTag(params['tag']).subscribe(f => this.foods = f);
+      else this.foodServiceSubscription=this.foodService.getAll().subscribe(f => this.foods = f);
     })
+  }
+
+  ngOnDestroy() {
+    if(this.foodServiceSubscription)
+      this.foodServiceSubscription.unsubscribe();
   }
 }

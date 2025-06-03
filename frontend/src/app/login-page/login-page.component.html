@@ -4,16 +4,15 @@
 
     <form (ngSubmit)="handleLogin()">
       <div class="mb-4">
-        <label htmlFor="email" class="block text-gray-300 text-sm font-semibold mb-2">
-          Email
+        <label htmlFor="username" class="block text-gray-300 text-sm font-semibold mb-2">
+          Username
         </label>
         <input
-          type="email"
-          id="email"
+          type="text" id="username"
           class="w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition duration-200 ease-in-out"
-          placeholder="Enter your email"
-          name="email"
-          required
+          placeholder="Enter your username"
+          name="username"
+          [(ngModel)]="username" required
         />
       </div>
 
@@ -27,7 +26,7 @@
           class="w-full p-3 border border-gray-600 rounded-md bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition duration-200 ease-in-out"
           placeholder="Enter your password"
           name="password"
-          required
+          [(ngModel)]="password" required
         />
       </div>
 
@@ -37,6 +36,9 @@
       >
         Login
       </button>
+      <div *ngIf="errorMessage" class="text-red-500 text-center mt-4 text-sm">
+        {{ errorMessage }}
+      </div>
     </form>
 
   </div>

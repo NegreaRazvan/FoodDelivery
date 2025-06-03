@@ -8,13 +8,16 @@ function getFoodTags($food_id, $pdo)
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
-function handleFoodApiRequest($method, $api_path, $pdo)
+
+function handleFoodApiRequest($method, $api_path, $pdo, $user_id = null)
 {
     switch ($method) {
         case 'GET':
             $foods = [];
-            $query = "SELECT f.* FROM foods f";
-            $params = [];
+            $query = " SELECT DISTINCT f.*, CASE WHEN uf.user_id IS NOT NULL AND uf.user_id = ? THEN TRUE ELSE FALSE END AS is_favorite
+                      FROM foods f
+                      LEFT JOIN users_favorites uf ON f.id = uf.food_id";
+            $params[] = $user_id;
 
             // Handle search by ID (e.g., /foods/123)
             if (isset($api_path[0]) && is_numeric($api_path[0])) {
@@ -27,6 +30,7 @@ function handleFoodApiRequest($method, $api_path, $pdo)
 
                 if ($food) {
                     $food['tags'] = getFoodTags($food['id'], $pdo);
+                    $food['is_favorite'] = (bool) $food['is_favorite'];
                     echo json_encode($food);
                 } else {
                     http_response_code(404);
@@ -65,6 +69,7 @@ function handleFoodApiRequest($method, $api_path, $pdo)
 
             foreach ($result as $food) {
                 $food['tags'] = getFoodTags($food['id'], $pdo);
+                $food['is_favorite'] = (bool) $food['is_favorite'];
                 $foods[] = $food;
             }
 

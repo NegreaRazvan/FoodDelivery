@@ -5,6 +5,7 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CurrencyPipe, NgIf} from '@angular/common';
 import {TagsComponent} from '../tags/tags.component';
 import {CartService} from '../services/cart/cart.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-food-page',
@@ -19,13 +20,22 @@ import {CartService} from '../services/cart/cart.service';
 })
 export class FoodPageComponent {
   food!: Food;
+  private foodServiceSubscription: Subscription | undefined;
 
   constructor(private activatedRoute:ActivatedRoute,private foodService: FoodService, private cartService: CartService,private router:Router) {
-    activatedRoute.params.subscribe(params => {
-      if (params['id']) {
-        this.food = this.foodService.getFoodById(params['id']);
-      }
+  }
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      if (params['id'])
+        this.foodServiceSubscription=this.foodService.getFoodById(params['id']).subscribe(f => this.food = f);
     })
+  }
+
+  ngOnDestroy() {
+    if (this.foodServiceSubscription)
+      this.foodServiceSubscription.unsubscribe();
+
   }
 
   addToCart(food: Food) {
