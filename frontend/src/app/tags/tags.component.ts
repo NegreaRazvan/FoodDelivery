@@ -3,6 +3,7 @@ import {Tag} from '../shared/Model/Tag';
 import {FoodService} from '../services/food/food.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {ActivatedRoute, RouterLink} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-tags',
@@ -17,6 +18,7 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 export class TagsComponent {
   @Input()
   foodPageTags?: string[] = [];
+  tagsSubscription: Subscription | null = null;
   tags?: Tag[] = [];
 
   constructor(private foodService:FoodService) {
@@ -24,7 +26,19 @@ export class TagsComponent {
 
   ngOnInit(): void {
     if(this.foodPageTags?.length == 0)
-      this.tags = this.foodService.getAllTags();
+      this.tagsSubscription = this.foodService.getAllTags().subscribe({
+        next: data => {
+          this.tags = data;
+        },
+        error: err => {
+          console.log("Something went wrong!");
+        }
+      })
+  }
+
+  ngOnDestroy(): void {
+    if(this.tagsSubscription)
+      this.tagsSubscription.unsubscribe();
   }
 
 }

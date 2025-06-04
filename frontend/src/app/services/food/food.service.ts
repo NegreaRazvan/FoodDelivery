@@ -3,7 +3,7 @@ import {Food} from '../../shared/Model/Food';
 import {Tag} from '../../shared/Model/Tag';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthentificationService} from '../authentification/authentification.service';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 
 
 @Injectable({
@@ -11,7 +11,9 @@ import {map, Observable} from 'rxjs';
 })
 export class FoodService {
   private readonly API_URL = 'http://localhost/OnlineRestaurant';
+  private readonly TAGS_API_URL = `${this.API_URL}/tags`;
   private readonly FOODS_API_URL= `${this.API_URL}/foods`;
+  private readonly FAVORITE_API_URL= `${this.API_URL}/favorite`;
 
   constructor(private http: HttpClient, private authService: AuthentificationService) {}
 
@@ -26,17 +28,13 @@ export class FoodService {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }
 
-  getAllTags(): Tag[]{
-    return [
-      { name: 'All', count: 6 },
-      { name: 'FastFood', count: 4 },
-      { name: 'Pizza', count: 2 },
-      { name: 'Lunch', count: 3 },
-      { name: 'SlowFood', count: 2 },
-      { name: 'Hamburger', count: 1 },
-      { name: 'Fry', count: 1 },
-      { name: 'Soup', count: 1 },
-    ];
+  getAllTags(): Observable<Tag[]>{
+    return this.http.get<any[]>(this.TAGS_API_URL, {}).pipe(
+      map(backendTags => backendTags.map(tag => ({
+        name : tag.name,
+        count: tag.count
+      })))
+    );
   }
 
   getAll(): Observable<Food[]> {
@@ -101,6 +99,22 @@ export class FoodService {
         imageUrl: food.image_url,
         tags: food.tags
       }))
+    );
+  }
+
+  favoriteFood(food_id: number): Observable<any> {
+    return this.http.post<any>(`${this.FAVORITE_API_URL}/${food_id}`,{}, {headers: this.getAuthHeaders()}).pipe(
+      tap(response => {
+        console.log(response);
+      })
+    );
+  }
+
+  unfavoriteFood(food_id: number): Observable<any> {
+    return this.http.delete<any>(`${this.FAVORITE_API_URL}/${food_id}`, {headers: this.getAuthHeaders()}).pipe(
+      tap(response => {
+        console.log(response);
+      })
     );
   }
 }

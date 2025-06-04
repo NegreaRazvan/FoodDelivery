@@ -11,8 +11,8 @@
           <h1 class="text-4xl font-extrabold text-white mb-2 leading-tight">
             {{food.name}}
           </h1>
-          <button (click)="food.favorite = !food.favorite"
-                  class="text-3xl transition-transform duration-200 hover:scale-125 focus:outline-none z-10 text-gray-300 hover:text-red-500">
+          <button (click)="handleFavorite()"
+                  class="text-3xl cursor-pointer transition-transform duration-200 hover:scale-125 focus:outline-none z-10 text-gray-300 hover:text-red-500">
             {{ food.favorite ? '❤️' : '🤍'}}
           </button>
         </div>

@@ -29,11 +29,6 @@ export class HomeComponent {
   private foodServiceSubscription: Subscription | undefined;
 
   constructor(private foodService:FoodService, private route:ActivatedRoute, private aut: AuthentificationService) {
-    console.log(aut.currentUserValue);
-    console.log(localStorage.getItem('accessToken'));
-    console.log(localStorage.getItem('currentUser'));
-    console.log(localStorage.getItem('refreshToken'));
-    console.log(localStorage.getItem('accessTokenExpiresIn'));
   }
 
   ngOnInit() {

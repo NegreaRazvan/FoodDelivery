@@ -20,6 +20,7 @@ import {Subscription} from 'rxjs';
 })
 export class FoodPageComponent {
   food!: Food;
+  private favoriteSubscription: Subscription | undefined;
   private foodServiceSubscription: Subscription | undefined;
 
   constructor(private activatedRoute:ActivatedRoute,private foodService: FoodService, private cartService: CartService,private router:Router) {
@@ -35,6 +36,8 @@ export class FoodPageComponent {
   ngOnDestroy() {
     if (this.foodServiceSubscription)
       this.foodServiceSubscription.unsubscribe();
+    if(this.favoriteSubscription)
+      this.favoriteSubscription.unsubscribe();
 
   }
 
@@ -47,4 +50,18 @@ export class FoodPageComponent {
     this.cartService.save(food)
   }
 
+  handleFavorite() {
+    if(this.favoriteSubscription)
+      this.favoriteSubscription.unsubscribe();
+
+    console.log('Favorite');
+    if(this.food.favorite) {
+      console.log('Favorite');
+      this.favoriteSubscription = this.foodService.unfavoriteFood(this.food.id).subscribe( f =>  this.food.favorite = !this.food.favorite);
+    }
+    else {
+      console.log('NOTFavorite');
+      this.favoriteSubscription = this.foodService.favoriteFood(this.food.id).subscribe( f =>  this.food.favorite = !this.food.favorite);
+    }
+  }
 }

@@ -32,7 +32,7 @@ $path = trim($path, '/');
 $pathSegments = explode('/', $path);
 $mainRoute = $pathSegments[0];
 
-$protectedRoutes = ['foods'];
+$protectedRoutes = ['foods', 'favorite'];
 
 //to make sure it's the user is still valid
 $headers = getallheaders();
@@ -63,6 +63,33 @@ switch ($mainRoute) {
         require_once __DIR__ . '/backend/logout.php';
         handleLogoutRequest($method, $pdo);
         break;
+
+    case 'tags':
+        require_once __DIR__ . '/backend/food_api.php';
+        handleNumberOfTagsRequest($method, $pdo);
+        break;
+
+    case 'favorite':
+        require_once __DIR__ . '/backend/food_api.php';
+        $api_path_segments = array_slice($pathSegments, 1);
+
+        $food_id = $api_path_segments[0] ?? null;
+        if (!$user_id) {
+            http_response_code(401);
+            echo json_encode(['message' => 'Authentication required to manage favorites.']);
+            exit();
+        }
+
+        if ($method === 'POST') {
+            handleFavoriteAFood($method, $pdo, $user_id, (int) $food_id);
+        } elseif ($method === 'DELETE') {
+            handleUnfavoriteAFood($method, $pdo, $user_id, (int) $food_id);
+        } else {
+            http_response_code(405); // Method Not Allowed
+            echo json_encode(['error' => 'Method not allowed for /favorites/{foodId}. Use POST to add or DELETE to remove.']);
+        }
+        break;
+
 
     default:
         http_response_code(404);

@@ -14,7 +14,7 @@ function handleFoodApiRequest($method, $api_path, $pdo, $user_id = null)
     switch ($method) {
         case 'GET':
             $foods = [];
-            $query = " SELECT DISTINCT f.*, CASE WHEN uf.user_id IS NOT NULL AND uf.user_id = ? THEN TRUE ELSE FALSE END AS is_favorite
+            $query = " SELECT f.*, CASE WHEN uf.user_id IS NOT NULL AND uf.user_id = ? THEN TRUE ELSE FALSE END AS is_favorite
                       FROM foods f
                       LEFT JOIN users_favorites uf ON f.id = uf.food_id";
             $params[] = $user_id;
@@ -63,6 +63,8 @@ function handleFoodApiRequest($method, $api_path, $pdo, $user_id = null)
                 }
             }
 
+            $query .= ' GROUP BY f.id';
+
             $stmt = $pdo->prepare($query);
             $stmt->execute($params);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -83,5 +85,85 @@ function handleFoodApiRequest($method, $api_path, $pdo, $user_id = null)
             break;
     }
 }
+
+function handleNumberOfTagsRequest($method, $pdo)
+{
+    if ($method !== 'GET') {
+        http_response_code(405);
+        echo json_encode(["error" => "GET method expected"]);
+        exit();
+    }
+
+    $query = 'SELECT tag_name, COUNT(tag_name) as count FROM food_tags GROUP BY tag_name';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $countTags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $query = 'SELECT COUNT(*) FROM foods';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $countOfFoods = $stmt->fetch(PDO::FETCH_COLUMN);
+
+    $tags = [];
+    $tags[] = ['name' => 'All', 'count' => (int) $countOfFoods];
+
+    foreach ($countTags as $countTag) {
+        $tags[] = [
+            'name' => $countTag['tag_name'],
+            'count' => (int) $countTag['count']
+        ];
+    }
+
+    echo json_encode($tags);
+    exit();
+}
+
+//made two functions instead of one because the check can be done easier on the frontend, so we don't call an extra select for nothing
+function handleFavoriteAFood($method, $pdo, $user_id, $food_id)
+{
+    if ($method !== 'POST') {
+        http_response_code(405);
+        echo json_encode(["error" => "POST method expected"]);
+        exit();
+    }
+
+    $query = "INSERT INTO users_favorites (user_id, food_id, favorited_at) VALUES (?,?,NOW())";
+
+    try {
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$user_id, $food_id]);
+        http_response_code(201);
+        echo json_encode(["message" => "Success"]);
+    } catch (\PDOException $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Failed to favorite food"]);
+    }
+
+
+}
+
+function handleUnfavoriteAFood($method, $pdo, $user_id, $food_id)
+{
+    if ($method !== 'DELETE') {
+        http_response_code(405);
+        echo json_encode(["error" => "DELETE method expected"]);
+        exit();
+    }
+
+    $query = "DELETE FROM users_favorites WHERE user_id = ? AND food_id = ?";
+
+    try {
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$user_id, $food_id]);
+        http_response_code(200);
+        echo json_encode(["message" => "Success"]);
+    } catch (\PDOException $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Failed to unfavorite food"]);
+    }
+
+
+}
+
 
 ?>
