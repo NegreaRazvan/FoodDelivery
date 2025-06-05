@@ -54,13 +54,10 @@ export class FoodPageComponent {
     if(this.favoriteSubscription)
       this.favoriteSubscription.unsubscribe();
 
-    console.log('Favorite');
     if(this.food.favorite) {
-      console.log('Favorite');
       this.favoriteSubscription = this.foodService.unfavoriteFood(this.food.id).subscribe( f =>  this.food.favorite = !this.food.favorite);
     }
     else {
-      console.log('NOTFavorite');
       this.favoriteSubscription = this.foodService.favoriteFood(this.food.id).subscribe( f =>  this.food.favorite = !this.food.favorite);
     }
   }

@@ -86,7 +86,19 @@ switch ($mainRoute) {
             handleUnfavoriteAFood($method, $pdo, $user_id, (int) $food_id);
         } else {
             http_response_code(405); // Method Not Allowed
-            echo json_encode(['error' => 'Method not allowed for /favorites/{foodId}. Use POST to add or DELETE to remove.']);
+            echo json_encode(['error' => 'Method not allowed']);
+        }
+        break;
+
+    case 'order':
+        require_once __DIR__ . '/backend/order.php';
+        if ($method === 'POST') {
+            handleAddOrder($pdo);
+        } elseif ($method === 'PUT') {
+            ///
+        } else {
+            http_response_code(405);
+            echo json_encode(['error' => 'Method not allowed']);
         }
         break;
 

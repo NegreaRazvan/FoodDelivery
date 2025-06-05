@@ -28,6 +28,10 @@ export class CartService {
     this.cartItemCountSubject.next(0);
   }
 
+  get cartValue(): Cart{
+    return this.cart;
+  }
+
   save(food:Food): void {
     let cartItem = this.findOne(food.id);
     if (cartItem) {

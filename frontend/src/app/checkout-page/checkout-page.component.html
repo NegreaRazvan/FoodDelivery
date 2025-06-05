@@ -1,0 +1,38 @@
+<div *ngIf="localStorage.getItem('checkout') === 'access_granted'">
+  <div class="max-w-5xl mx-auto ">
+    <div class="p-6  text-gray-200 flex flex-col md:flex-row gap-8">
+      <div class="flex-1">
+        <h1 class="text-2xl font-bold mb-4 text-blue-400 ">Order details</h1>
+
+        <form [formGroup]="checkoutForm" class="space-y-4">
+          <div>
+            <label for="username" class="block mb-1 text-sm font-medium text-gray-300">Username</label>
+            <input id="username" formControlName="username" class="w-full px-3 py-2 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div>
+            <label for="email" class="block mb-1 text-sm font-medium text-gray-300">Email</label>
+            <input id="email" formControlName="email" type="email" class="w-full px-3 py-2 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div>
+            <label for="address" class="block mb-1 text-sm font-medium text-gray-300">Address</label>
+            <input id="address" formControlName="address" class="w-full px-3 py-2 bg-gray-800 text-white border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+        </form>
+      </div>
+      <div class="flex-1">
+        <h1 class="text-2xl font-bold mb-4 text-blue-400">Choose your map location</h1>
+        <div class="h-76 bg-gray-800 rounded-md flex items-center justify-center text-gray-400">
+          Map Placeholder
+        </div>
+      </div>
+    </div>
+    <div class="pt-4 max-w-xl mx-auto  hover:shadow-2xl">
+      <button type="submit" (click)="createOrder()" class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition duration-150">
+        Submit Order
+      </button>
+    </div>
+  </div>
+</div>

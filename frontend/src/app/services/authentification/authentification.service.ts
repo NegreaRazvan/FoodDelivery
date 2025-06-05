@@ -31,6 +31,7 @@ export class AuthentificationService {
           id: response.user.id,
           username: response.user.username,
           email: response.user.email,
+          address: response.user.address,
         }
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('accessToken', response.access_token);

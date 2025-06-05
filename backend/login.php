@@ -70,7 +70,8 @@ function handleLoginRequest($method, $pdo)
         "user" => [
             "id" => $user['id'],
             "username" => $user['username'],
-            "email" => $user['email']
+            "email" => $user['email'],
+            "address" => $user['address'],
         ],
         "access_token" => $access_token,
         "refresh_token" => $refresh_token,

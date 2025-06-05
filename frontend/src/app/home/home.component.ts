@@ -29,6 +29,7 @@ export class HomeComponent {
   private foodServiceSubscription: Subscription | undefined;
 
   constructor(private foodService:FoodService, private route:ActivatedRoute, private aut: AuthentificationService) {
+    console.log(aut.currentUserValue)
   }
 
   ngOnInit() {
