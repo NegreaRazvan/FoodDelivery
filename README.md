@@ -67,11 +67,11 @@ Here are some screenshots showcasing the application's interface:
 
 ### **Main Food Catalog**
 
-![Main Food Catalog](screenshots/image.jpg)
+![Main Food Catalog](screenshots/image.png)
 
 ### **Food Detail View**
 
-![Food Detail View](screenshots/image-1.jpg)
+![Food Detail View](screenshots/image-1.png)
 
 ### **Shopping Cart**
 
@@ -83,7 +83,7 @@ Here are some screenshots showcasing the application's interface:
 
 ### **Checkout Page**
 
-![Checkout Page](screenshots/image-5.png)
+![Checkout Page](screenshots/image-4.png)
 
 ## **5. API Endpoints**
 
