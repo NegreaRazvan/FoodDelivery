@@ -90,12 +90,14 @@ switch ($mainRoute) {
         }
         break;
 
-    case 'order':
+    case 'orders':
         require_once __DIR__ . '/backend/order.php';
         if ($method === 'POST') {
             handleAddOrder($pdo);
         } elseif ($method === 'PUT') {
             ///
+        } elseif ($method === 'GET') {
+            handleGetAllOrders($pdo);
         } else {
             http_response_code(405);
             echo json_encode(['error' => 'Method not allowed']);

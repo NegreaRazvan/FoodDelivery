@@ -6,6 +6,7 @@ import {AuthentificationService} from '../services/authentification/authentifica
 import {OrderService} from '../services/order/order.service';
 import {Subscription} from 'rxjs';
 import {NgIf} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-checkout-page',
@@ -21,7 +22,7 @@ export class CheckoutPageComponent {
   checkoutForm!: FormGroup;
   orderAddSubscription: Subscription | null = null;
 
-  constructor(private formBuilder: FormBuilder, private cartService: CartService, private authenticationService: AuthentificationService, private orderService: OrderService) {
+  constructor(private formBuilder: FormBuilder, private cartService: CartService, private authenticationService: AuthentificationService, private orderService: OrderService, private router: Router) {
     this.checkoutForm = this.formBuilder.group({
       username: ['' , Validators.required],
       email: ['' , Validators.required],
@@ -44,9 +45,17 @@ export class CheckoutPageComponent {
     this.order.email = this.fg['email'].value;
     this.order.address = this.fg['address'].value;
 
-    console.log(this.order);
 
-    this.orderAddSubscription = this.orderService.save(this.order).subscribe();
+    this.orderAddSubscription = this.orderService.save(this.order).subscribe({
+      next: result => {
+        this.router.navigate(['/payment-page'], {state: {order: this.orderService.currentOrderValue}});
+      },
+      error: (err) => {
+        console.error('Error creating order:', err);
+        alert('An error occurred while creating the order. Please try again later.');
+      }
+    });
+
   }
 
   ngOnInit() {
