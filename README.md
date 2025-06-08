@@ -67,7 +67,7 @@ Here are some screenshots showcasing the application's interface:
 
 ### **Main Food Catalog**
 
-![Main Food Catalog](screenshots/image_fbbe49.jpg)
+![Main Food Catalog](screenshots/image.jpg)
 
 ### **Food Detail View**
 
