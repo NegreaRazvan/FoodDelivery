@@ -18,13 +18,15 @@
           <a (click)="goToCart()" href="#" routerLink="/cart-page" class="text-white hover:text-[#0589c2] inline-block p-4">
             Cart
           </a>
-          <div *ngIf="cartItemCount > 0"
-               class="absolute top-4 right-3 transform -translate-y-1/2 translate-x-1/2
-               bg-blue-600 text-white text-xs font-bold
-               rounded-full h-5 w-5 flex items-center justify-center
-               shadow-md notification-badge">
-            {{cartItemCount}}
-          </div>
+          <ng-container *ngIf="(cartItemCount$ | async) as cartItemCount">
+            <div *ngIf="cartItemCount > 0"
+                 class="absolute top-4 right-3 transform -translate-y-1/2 translate-x-1/2
+                 bg-blue-600 text-white text-xs font-bold
+                 rounded-full h-5 w-5 flex items-center justify-center
+                 shadow-md notification-badge">
+              {{cartItemCount}}
+            </div>
+          </ng-container>
         </li>
       </ul>
     </nav>

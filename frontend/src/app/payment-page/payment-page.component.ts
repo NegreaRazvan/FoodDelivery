@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
   selector: 'app-payment-page',
   imports: [
     ReactiveFormsModule,
-    CurrencyPipe
   ],
   templateUrl: './payment-page.component.html',
   styleUrl: './payment-page.component.css'

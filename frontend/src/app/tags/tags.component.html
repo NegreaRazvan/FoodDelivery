@@ -1,4 +1,4 @@
-<div *ngIf="this.tags?.length" class="flex flex-wrap gap-2 p-4 justify-center">
+<div *ngIf="!this.foodPageTags?.length && (tags$ | async) as tags" class="flex flex-wrap gap-2 p-4 justify-center">
   <a *ngFor="let tag of tags"
      routerLink="/tag/{{tag.name}}"
      class="
@@ -13,7 +13,7 @@
     {{tag.name}}({{tag.count}})
   </a>
 </div>
-<div *ngIf="!this.tags?.length" class="flex gap-2 ">
+<div *ngIf="this.foodPageTags?.length" class="flex gap-2 ">
   <a *ngFor="let tag of foodPageTags"
      routerLink="/tag/{{tag}}"
      class="

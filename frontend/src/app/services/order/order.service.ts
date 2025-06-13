@@ -10,7 +10,7 @@ import {Order} from '../../shared/Model/Order';
 export class OrderService {
   private currentOrderSubject: BehaviorSubject<Order | null>;
   public currentOrder: Observable<Order | null>;
-  private ORDER_URL = 'http://localhost/OnlineRestaurant/orders';
+  private ORDER_URL = 'https://platformacrm.info/online-restaurant/orders';
 
   constructor(private http: HttpClient) {
     this.currentOrderSubject = new BehaviorSubject<Order | null>(null);

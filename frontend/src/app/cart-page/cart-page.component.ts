@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import {Cart} from '../shared/Model/Cart';
 import {CartService} from '../services/cart/cart.service';
 import {CartItem} from '../shared/Model/CartItem';
-import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {CartFoodCardComponent} from '../cart-food-card/cart-food-card.component';
 import {routes} from '../app.routes';
 
@@ -15,27 +15,20 @@ import {routes} from '../app.routes';
     RouterLink,
     CurrencyPipe,
     NgIf,
-    CartFoodCardComponent
+    CartFoodCardComponent,
+    AsyncPipe
   ],
   templateUrl: './cart-page.component.html',
   styleUrl: './cart-page.component.css'
 })
 export class CartPageComponent {
-  cart! : Cart;
-  cartSubscription: Subscription | undefined;
+  cart$! : Observable<Cart>;
 
   constructor(private cartService: CartService, private router: Router) {
   }
 
   ngOnInit() {
-    this.cartSubscription = this.cartService.cartItems$.subscribe(cart => {
-      this.cart = cart;
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.cartSubscription)
-      this.cartSubscription.unsubscribe();
+    this.cart$ = this.cartService.cartItems$;
   }
 
   ProceedToCheckout() {

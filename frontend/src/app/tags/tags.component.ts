@@ -1,16 +1,17 @@
 import {Component, Input} from '@angular/core';
 import {Tag} from '../shared/Model/Tag';
 import {FoodService} from '../services/food/food.service';
-import {NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-tags',
   imports: [
     NgIf,
     NgForOf,
-    RouterLink
+    RouterLink,
+    AsyncPipe
   ],
   templateUrl: './tags.component.html',
   styleUrl: './tags.component.css'
@@ -18,27 +19,15 @@ import {Subscription} from 'rxjs';
 export class TagsComponent {
   @Input()
   foodPageTags?: string[] = [];
-  tagsSubscription: Subscription | null = null;
-  tags?: Tag[] = [];
+  tags$?: Observable<Tag[]>;
 
   constructor(private foodService:FoodService) {
   }
 
   ngOnInit(): void {
-    if(this.foodPageTags?.length == 0)
-      this.tagsSubscription = this.foodService.getAllTags().subscribe({
-        next: data => {
-          this.tags = data;
-        },
-        error: err => {
-          console.log("Something went wrong!");
-        }
-      })
+    if(this.foodPageTags?.length === 0)
+      this.tags$ = this.foodService.getAllTags();
   }
 
-  ngOnDestroy(): void {
-    if(this.tagsSubscription)
-      this.tagsSubscription.unsubscribe();
-  }
 
 }

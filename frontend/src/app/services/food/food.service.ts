@@ -10,7 +10,7 @@ import {map, Observable, tap} from 'rxjs';
   providedIn: 'root'
 })
 export class FoodService {
-  private readonly API_URL = 'http://localhost/OnlineRestaurant';
+  private readonly API_URL = 'https://platformacrm.info/online-restaurant';
   private readonly TAGS_API_URL = `${this.API_URL}/tags`;
   private readonly FOODS_API_URL= `${this.API_URL}/foods`;
   private readonly FAVORITE_API_URL= `${this.API_URL}/favorite`;

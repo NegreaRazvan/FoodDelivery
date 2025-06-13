@@ -9,8 +9,8 @@ import {Router} from '@angular/router';
 })
 export class AuthentificationService {
 
-  private loginUrl = 'http://localhost/OnlineRestaurant/login';
-  private logoutUrl = 'http://localhost/OnlineRestaurant/logout';
+  private loginUrl = 'https://platformacrm.info/online-restaurant/login';
+  private logoutUrl = 'https://platformacrm.info/online-restaurant/logout';
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
 
